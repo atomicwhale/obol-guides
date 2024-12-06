@@ -8,19 +8,19 @@ These guides are created for pepole who want to run Charon with their existing e
 Obol provides an official docker based package for running Charon. These guides assume you will be running this package **using docker**.  
 The basic principle are the same across all these guides. These guides aims to cover tips and tricks that are not included in the standard setup described in the official documents.
 
-## Reccommended Hardware (local machine or VPS)
+## Minimum/Recommended Hardware (local machine or VPS)
 - **Node (with/without Charon)**  
  CPU: 4+ core  
- RAM: 32 GB (16 GB works with some client combinations)  
- SSD: 4 TB NVMe (TLC wiht DRAM)  
+ RAM: 16/32 GB (16 GB only works with some client combinations)  
+ SSD: 2/4 TB NVMe (TLC wiht DRAM)  
   *Please refer to the excellent hardware guide from [ETH-Staker](https://ethstaker.cc/staking-hardware) and ETH-Docker [SSD guide](https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038).*
   
 - **Charon (without EC/BN)**  
- CPU: 1+ core  
- RAM: 2 GB  
+ CPU: 1/2+ core  
+ RAM: 1/2 GB (While 1 GB works, 2+ GB is highly recommended)  
  Disk: Few GB  
 
-## The guides
+## Guides
 Please pick one of the guides below
 
 1. [Running Charon with Native Execution/Consensus Clients](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-native.md)  
