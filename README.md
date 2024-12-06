@@ -26,11 +26,11 @@ Please pick one of the guides below
 1. [Running Charon with Native Execution/Consensus Clients](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-native.md)  
 This guide covers running Charon with local EC/BN running as system service (systemd). For example, if you have followed one of these guides (Somer Esat Guides / CoinCashew Guides / EthPilar) to set up your node.  
   
-2. [Running Charon with Docker Execution/Consensus Clients](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md)  
+2. [Running Charon with Docker Execution/Consensus Clients](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md) (WIP)  
 This guide covers running Charon with local EC/BN managed by a docker-based stack (ETH-Docker/Rocket Pool Smart Node).
 
-3. [Running Charon with remote EC/BN](https://github.com/atomicwhale/obol-guides/blob/main/charon_remote.md)  
+3. [Running Charon with remote EC/BN](https://github.com/atomicwhale/obol-guides/blob/main/charon_remote.md) (WIP)  
 This guide covers running Charon with remote EC/BN. For people who already have EC/BN running on a remote/differnt machine, and want to run Charon separately (for example a small VPS).  
 
-4. [Running Multiple Charon instances on one machine](https://github.com/atomicwhale/obol-guides/blob/main/charon_multiple.md)  
+4. [Running Multiple Charon instances on one machine](https://github.com/atomicwhale/obol-guides/blob/main/charon_multiple.md) (WIP)  
 This guide covers steps to run multiple Charon instaces on one machine.  
