@@ -4,8 +4,8 @@ Charon is a middleware built by Obol to enable any existing Ethereum validator c
 Users are highly recommended to go through [Obol's official documetation](https://docs.obol.org/int/Overview) first to have a basic understanding of how a Charon DVT cluster works.
 
 ## Overview
-These guides are created for pepole who want to run Charon with their existing execution/consensus clients.
-Obol provides an official docker based package for running Charon. These guides assume you will be running this package **using docker**.
+These guides are created for pepole who want to run Charon with their existing execution/consensus clients.  
+Obol provides an official docker based package for running Charon. These guides assume you will be running this package **using docker**.  
 The basic principle are the same across all these guides. These guides aims to cover tips and tricks that are not included in the standard setup described in the official documents.
 
 ## Reccommended Hardware (local machine or VPS)
