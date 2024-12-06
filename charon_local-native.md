@@ -55,7 +55,7 @@ CHARON_BEACON_NODE_ENDPOINTS=http://localhost:5052
 ### 3. Start Charon
 `docker compose up -d`  
 
-## Appendix
+## Tips and Tricks
 ### Removing unused volumes  
 If you have already started Charon before you disable Nethermind and Lighthouse, you will have the docker containers and volumes which take up some space on your disk.  
 They can removed by running `docker volume prune -a` and choose `yes`. This will remove all local volumes not used by at least one container!  
