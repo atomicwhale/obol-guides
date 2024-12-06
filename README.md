@@ -13,7 +13,7 @@ The basic principle are the same across all these guides. These guides aims to c
  CPU: 4+ core  
  RAM: 16/32 GB (16 GB only works with some client combinations)  
  SSD: 2/4 TB NVMe (TLC wiht DRAM)  
-  *Please refer to the excellent hardware guide from [ETH-Staker](https://ethstaker.cc/staking-hardware) and ETH-Docker [SSD guide](https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038).*
+  *Please also refer to the excellent guides from [ETH-Staker](https://ethstaker.cc/staking-hardware) and ETH-Docker [SSD guide](https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038).*
   
 - **Charon (without EC/BN)**  
  CPU: 1/2+ core  
