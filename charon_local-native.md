@@ -52,9 +52,8 @@ services:
 1. Check the local Beacon node is reachable  
 `curl http://localhost:5052/eth/v1/node/syncing`  
 You should see something like this:  
-```
-{"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}
-```  
+> {"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}
+
 which indicates that the beaconnode is reachable at localhost, and `sync_distance` at (0 or 1) and `is_syncing` is (false) which suggest the consensus client is synced.  
 
 2. Modify the `docker-compose.override.yml` so Charon can connect to host network  
@@ -88,10 +87,11 @@ Check the logs of the Charon container by using:
 You can follow the logs here for a few minutes if needed, use `Ctrl+C` to breakout from the logs.
 
 If Charon is running normally, you will see:  
-[Normal logs]  
+> [Normal logs]  
 
 If Charon cannot connect to the beacon node, you will see:  
-[Fail logs]  
+> [Fail logs]  
+
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
 
 ## Tips and Tricks
