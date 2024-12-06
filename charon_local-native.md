@@ -1,13 +1,16 @@
 # Running Charon with Native Execution/Consensus Clients
+
 ## Introduction
-This guide is for people who want to run Charon on an existing machine with local execution/consensus clients (EC/CC) running as system service (systemd). e.g. You have followed one of these guides (Somer Esat Guides / CoinCashew Guides / EthPilar) when setting up your node.  
-  
+
+This guide is for people who want to run Charon on an existing machine with local execution/consensus clients (EC/CC) running as system service (systemd). e.g. You have followed one of these guides (Somer Esat Guides / CoinCashew Guides / EthPilar) when setting up your node.
+
 *This guide has been tested on Debian 12.7 and should work on all Debian-basd (Debian/Ubuntu etc.) system.*  
-*The term Beacon node (BN) and Consensus client (CC) are used interchangably in this guide.*  
+*The term Beacon node (BN) and Consensus client (CC) are used interchangably in this guide.*
+
   
 **TLDR**  
 In this configuration, EC/CC are already running as a system service (systemd) and can be reached on localhost.  
-We will setup Charon in docker using the Obol official docker package and point it to local BN.  
+We will setup Charon in docker using the Obol official docker package and point it to local BN.
 
 ## Configuration
 ### 0. Initial setup  
@@ -18,7 +21,12 @@ Please modify you configurations following the guide below before starting Charo
 (This step is taken from the official guide, you can find it in the official guide [Step 4: Existing Beacon Node](https://docs.obol.org/start/quickstart_group#step-4-start-your-distributed-validator-node))  
 1. Creat the `docker-compose.override.yml` file from the example  
 `cp -n docker-compose.override.yml.sample docker-compose.override.yml`  
-2. Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`. The override file should now look like this:  
+
+2. Modify the `docker-compose.override.yml` file using an editor (`nano` for example)  
+`nano docker-compose.override.yml`  
+- Uncomment both `nethermind` and `lighthouse` under `services`.  
+- Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
+The override file should now look like this:  
 ```
 services:
   nethermind:
@@ -38,26 +46,52 @@ services:
       #- 5052:5052 # HTTP
       #- 5054:5054 # Metrics
 ```
+
 ### 2. Configure Charon to use local Beacon node (Consensus client)  
-1. Check the local Beacon node is reachable [check docker host network]  
+1. Check the local Beacon node is reachable  
 `curl http://localhost:5052/eth/v1/node/syncing`  
 You should see something like this:  
 ```
 {"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}
 ```  
 which indicates that the beaconnode is reachable at localhost, and `sync_distance` at (0 or 1) and `is_syncing` is (false) which suggest the consensus client is synced.  
-  
+
+2. Modify the `docker-compose.override.yml` so Charon can connect to host network  
+(Docker containers are placed in docker's `bridge` network by default and cannot reach service running on host without further configuration)  
+Modify the `docker-compose.override.yml` file using an editor  
+`nano docker-compose.override.yml`  
+Uncomment the `charon` line, and the two lines for `extra_host`.  
+It should looke like this:  
+```
+  charon:
+    # Configure any additional env var flags in .env.charon.more
+    #env_file: [.env.charon.more]
+    # Uncomment the extra_hosts section if you are trying to communicate with a CL running in a different docker network on the same machine 
+    #extra_hosts:
+      #- "host.docker.internal:host-gateway"
+```
+
 3. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost. The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
 CHARON_BEACON_NODE_ENDPOINTS=http://host.docker.internal:5052
 ```
 
-### 3. Start Charon
+### 3. Start Charon  
+Start Charon by running  
 `docker compose up -d`  
 
-### 4. Check if Charon is running successfuly
-[Normal logs]
+### 4. Check if Charon is running successfuly  
+Check the logs of the Charon container by using:  
+`docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`  
+You can follow the logs here for a few minutes if needed, use `Ctrl+C` to breakout from the logs.
+
+If Charon is running normally, you will see:  
+[Normal logs]  
+
+If Charon cannot connect to the beacon node, you will see:  
+[Fail logs]  
+If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
 
 ## Tips and Tricks
 ### Removing unused volumes  
