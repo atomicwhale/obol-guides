@@ -22,13 +22,13 @@ The basic principle are the same across all these guides. These guides aims to c
 ## The guides
 Please pick one of the guides below
 
-1. [Running Charon with Native Execution/Consensus Clients](Link)  
+1. [Running Charon with Native Execution/Consensus Clients]([Link](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-native.md))  
 This guide is for people who have local EC/BN as system service (systemd), for example, if you have followed one of these guides (Somer Esat Guides / CoinCashew Guides / EthPilar).  
   
-2. [Running Charon with Docker Execution/Consensus Clients](Link)  
+2. [Running Charon with Docker Execution/Consensus Clients]([Link](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md))  
 This guide is for people who have local EC/BN manged as a docker-based stack (ETH-Docker/Rocket Pool Smart Node)
 
-3. [Running Charon with remote EC/BN](Link)  
+3. [Running Charon with remote EC/BN]([Link](https://github.com/atomicwhale/obol-guides/blob/main/charon_remote.md))  
 This guide is for people who want to run only Charon locally with remote execution/consensus clients, for example, if you have followed one of these guides (Somer Esat Guides / CoinCashew Guides / EthPilar).  
 
 
