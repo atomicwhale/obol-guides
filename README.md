@@ -6,7 +6,7 @@ Users are highly recommended to go through [Obol's official documetation](https:
 ## Overview
 These guides are created for pepole who want to run Charon with their existing execution/consensus clients.  
 Obol provides an official docker-based package for running Charon. These guides assume you will be running this package **using docker**.  
-The basic principle are the same across all these guides. These guides aims to cover tips and tricks that are not included in the standard setup described in the official documents.
+The basic principles are the same across all these guides. These guides aims to cover tips and tricks that may not be included in the standard setup described in the official documents.
 
 ## Minimum/Recommended Hardware (local machine or VPS)
 - **Node (with/without Charon)**  
