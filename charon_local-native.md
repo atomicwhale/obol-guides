@@ -24,8 +24,9 @@ Please modify you configurations following the guide below before starting Charo
 
 2. Modify the `docker-compose.override.yml` file using an editor (`nano` for example)  
 `nano docker-compose.override.yml`  
-- Uncomment both `nethermind` and `lighthouse` under `services`.  
-- Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
+    * Uncomment both `nethermind` and `lighthouse` under `services`.  
+    * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.
+    * 
 The override file should now look like this:  
 ```
 services:
