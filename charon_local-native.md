@@ -15,7 +15,7 @@ We will setup Charon in docker using the Obol official docker package and point 
 ## Configuration
 ### 0. Initial setup  
 Please follow the [official guide](https://docs.obol.org/start/quickstart_group) **Step 1-3** to download Charon, set up the ENR, join a cluster, and run a DKG.  
-Please modify you configurations following the guide below before starting Charon.  
+Stop **BEFORE** you do Step 4 and modify you configurations following the guide below.  
 
 ### 1. Disable EC/CC included in the Charon docker package
 (This step is taken from the official guide, you can find it in the official guide [Step 4: Existing Beacon Node](https://docs.obol.org/start/quickstart_group#step-4-start-your-distributed-validator-node))  
