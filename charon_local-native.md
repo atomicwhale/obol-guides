@@ -39,7 +39,7 @@ services:
       #- 5054:5054 # Metrics
 ```
 ### 2. Configure Charon to use local Beacon node (Consensus client)  
-1. Check the local Beacon node is reachable  
+1. Check the local Beacon node is reachable [check docker host network]  
 `curl http://localhost:5052/eth/v1/node/syncing`  
 You should see something like this:  
 ```
@@ -50,10 +50,14 @@ which indicates that the beaconnode is reachable at localhost, and `sync_distanc
 3. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost. The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
-CHARON_BEACON_NODE_ENDPOINTS=http://localhost:5052
+CHARON_BEACON_NODE_ENDPOINTS=http://host.docker.internal:5052
 ```
+
 ### 3. Start Charon
 `docker compose up -d`  
+
+### 4. Check if Charon is running successfuly
+[Normal logs]
 
 ## Tips and Tricks
 ### Removing unused volumes  
