@@ -42,7 +42,7 @@ services:
 1. Check the local Beacon node is reachable
 `curl http://localhost:5052/eth/v1/node/syncing`  
 You should see something like this:  
-`{"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}`  
+```{"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}```
 which indicates that the beaconnode is reachable at localhost, and `sync_distance` at (0 or 1) and `is_syncing` is (false) which suggest the consensus client is synced.  
   
 2. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost. The section should now look like this:  
