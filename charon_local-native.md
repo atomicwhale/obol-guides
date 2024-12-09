@@ -22,7 +22,7 @@ Stop **BEFORE** you do Step 4 and modify you configurations following the guide 
 1. Creat the `docker-compose.override.yml` file from the example  
 `cp -n docker-compose.override.yml.sample docker-compose.override.yml`  
 
-2. Modify the `docker-compose.override.yml` file using an editor (`nano` for example)  
+2. Modify `docker-compose.override.yml` file using an editor (`nano` for example)  
 `nano docker-compose.override.yml`  
     * Uncomment both `nethermind` and `lighthouse` under `services`.  
     * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.
@@ -56,7 +56,7 @@ You should see something like this:
 
 which indicates that the beaconnode is reachable at localhost, and `sync_distance` at (0 or 1) and `is_syncing` is (false) which suggest the consensus client is synced.  
 
-2. Modify the `docker-compose.override.yml` so Charon can connect to host network  
+2. Modify `docker-compose.override.yml` so Charon can connect to host network  
 (Docker containers are placed in docker's `bridge` network by default and cannot reach service running on host without further configuration)  
 Modify the `docker-compose.override.yml` file using an editor  
 `nano docker-compose.override.yml`  
@@ -67,18 +67,24 @@ It should looke like this:
     # Configure any additional env var flags in .env.charon.more
     #env_file: [.env.charon.more]
     # Uncomment the extra_hosts section if you are trying to communicate with a CL running in a different docker network on the same machine 
-    #extra_hosts:
-      #- "host.docker.internal:host-gateway"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 ```
 
-3. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost. The section should now look like this:  
+3. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
+The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
 CHARON_BEACON_NODE_ENDPOINTS=http://host.docker.internal:5052
 ```
 
+4. (Optional) Disable mev-boost  
+You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
+*Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
+
 ### 3. Start Charon  
 Start Charon by running  
+(Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)
 `docker compose up -d`  
 
 ### 4. Check if Charon is running successfuly  
