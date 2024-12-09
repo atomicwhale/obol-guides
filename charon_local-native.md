@@ -90,13 +90,14 @@ Start Charon by running
 ### 4. Check if Charon is running successfuly  
 Check the logs of the Charon container by using:  
 `docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`  
-You can follow the logs here for a few minutes if needed, use `Ctrl+C` to breakout from the logs.
+(Tips: Using auto complete - You can try pressing `Tab` after typeing the first few letters of the container name)  
+You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.
 
-If Charon is running normally, you will see:  
+- If Charon is running normally, you will see:  
 > [Normal logs]  
 
-If Charon cannot connect to the beacon node, you will see:  
-> [Fail logs]  
+- If Charon cannot connect to the beacon node, you will see an error:
+`ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}`  
 
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
 
