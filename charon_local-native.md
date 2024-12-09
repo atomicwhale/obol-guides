@@ -57,7 +57,7 @@ You should see something like this:
 which indicates that the beaconnode is reachable at localhost, and `sync_distance` at (0 or 1) and `is_syncing` is (false) which suggest the consensus client is synced.  
 
 2. Modify `docker-compose.override.yml` so Charon can connect to host network  
-(Docker compose creates a [new docker network by defaul](https://docs.docker.com/compose/how-tos/networking/), containers within the network cannot reach service running on host without further configuration)  
+(Docker compose creates a [new docker network by default](https://docs.docker.com/compose/how-tos/networking/), containers within the network cannot reach service running on host without further configuration)  
 Modify the `docker-compose.override.yml` file using an editor  
 `nano docker-compose.override.yml`  
 Uncomment the `charon` line, and the two lines for `extra_host`.  
