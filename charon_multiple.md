@@ -26,8 +26,25 @@ cd charon-distributed-validator-node-2/
 ```
 Repeat the above step if you want to run more than 2 Charon nodes.  
 
-The configuration of the node can be done at each folder.  
-The rest of the setup are the same as descibed in the [official guide] (https://docs.obol.org/run/start/quickstart_group) or other [guide here](https://github.com/atomicwhale/obol-guides)  
+The configuration of each node needs to be done separatly under at each folder.  
+Look at the official guide for other steps requires for setting up a Charon node: [official guide] (https://docs.obol.org/run/start/quickstart_group) or other [guide here](https://github.com/atomicwhale/obol-guides)  
+
+After configuration, the folder and file structure will look like this:  
+```
+\charon-distributed-validator-node-1
+|-.env
+|-.charon
+|-docker-compose.yml
+|...
+\charon-distributed-validator-node-2
+|-.env
+|-.charon
+|-docker-compose.yml
+|...
+\charon-distributed-validator-node-3
+...
+```
+
 
 ### 2. Adjust Charon ports  
 Each Charon need a different P2P ports (3610 by default)
