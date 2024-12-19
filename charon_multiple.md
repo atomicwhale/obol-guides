@@ -21,6 +21,11 @@ cd charon-distributed-validator-node-2/
 The configuration of the node can be done at each folder.  
 The rest of the setup are the same as descibed in the [official guide] (https://docs.obol.org/run/start/quickstart_group) or other [guide here](https://github.com/atomicwhale/obol-guides)  
 
+### Start Charon  
+Start Charon by running  
+(Make sure you are running this command under the correct charon folder. You will need to run this again for each charon node under their correspding folders)  
+`docker compose up -d`  
+
 ## Important note:
 1. [Disclaimer] Not intended for running for the same cluster.
 2. Make sure the machine is capable for running multiple nodes.
