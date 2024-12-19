@@ -70,6 +70,7 @@ It should looke like this:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 ```
+Save and exit.  
 
 3. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
 The section should now look like this:  
@@ -77,6 +78,7 @@ The section should now look like this:
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
 CHARON_BEACON_NODE_ENDPOINTS=http://host.docker.internal:5052
 ```
+Save and exit.  
 
 4. (Optional) Disable mev-boost  
 You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
