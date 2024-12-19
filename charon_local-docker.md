@@ -30,7 +30,7 @@ NETWORK ID     NAME                 DRIVER    SCOPE
 839941bca9ab   none                 null      local
 ```
 - If you are running ETH-docker, you will notice a bridge network called `eth-docker_default`. (This first part of the network name will be the same as the name of the folder where ETH-docker is located).
-- If you are running Rocketpool Smart Node, you will notice a bridge network called `rockerpool_net`.
+- If you are running Rocketpool Smart Node, you will notice a bridge network called `rockerpool_net`.  
 This is the docker network where you EC/CC are running. In the next step, we will connect charon to this network so it can talk to the EC/BN.  
 
 ### 2. Disable EC/CC included in the Charon docker package
@@ -45,7 +45,6 @@ This is the docker network where you EC/CC are running. In the next step, we wil
 `nano docker-compose.override.yml`  
     * Uncomment both `nethermind` and `lighthouse` under `services`.  
     * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.
-    * 
 The section in the override file should now look like this:  
 ```
 services:
@@ -67,8 +66,8 @@ services:
       #- 5054:5054 # Metrics
 ```
 
-### 3. Configure Charon to use the required docker network
-(This followin step use ETH-docker as an example, please use the correct docker network name if you are running Rocketpool Smartnode or other packages)  
+### 3. Configure Charon to use additional docker network
+(This following step use ETH-docker `eth-docker_default` as example, please adjust if you are running Rocketpool Smartnode or other packages)  
 1. Modify `charon` section in `docker-compose.override.yml` file  
 (`nano docker-compose.override.yml`)  
 Uncomment line `charon` under the service section, and add additional network configureation here.
@@ -87,8 +86,9 @@ networks:
 ```
 Save and exit.  
 
-### 4. Configure Charon to local Beacon node (Consensus client)  
+### 4. Configure Charon to use local Beacon node (Consensus client)  
 1. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file.  
+(Both ETH-docker and Rocketpool Smart Node uses alias `eth1`/`eth2` for their EC/CC, so the same setting can be use here)  
 The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
