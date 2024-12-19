@@ -25,8 +25,7 @@ Stop **BEFORE** you do Step 4 and modify you configurations following the guide 
 2. Modify `docker-compose.override.yml` file using an editor (`nano` for example)  
 `nano docker-compose.override.yml`  
     * Uncomment both `nethermind` and `lighthouse` under `services`.  
-    * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.
-    * 
+    * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
 The override file should now look like this:  
 ```
 services:
@@ -47,6 +46,7 @@ services:
       #- 5052:5052 # HTTP
       #- 5054:5054 # Metrics
 ```
+Use `Ctrl+O` and `Ctrl+X` to save and exit if you using `nano`.
 
 ### 2. Configure Charon to use local Beacon node (Consensus client)  
 1. Check the local Beacon node is reachable  
