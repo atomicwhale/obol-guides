@@ -4,7 +4,7 @@
 
 This guide is for people who want to run Charon on an existing machine with local execution/consensus clients (EC/CC) running as docker containers (such as ETH-Docker, Rocketpool Smart node).
 
-*This guide has been tested on Debian 12.7 and should work on all Debian-basd (Debian/Ubuntu etc.) system.*  
+*This guide has been tested on Debian 12 and should work on all Debian-basd (Debian/Ubuntu etc.) system.*  
 *The term Beacon node (BN) and Consensus client (CC) are used interchangably in this guide.*
 
   
