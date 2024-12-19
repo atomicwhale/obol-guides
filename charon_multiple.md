@@ -2,7 +2,7 @@
 
 TLDR: Docker compose makes this setup very easy. Clone the repo to a new directory and they will run as two isolated instances.
 
-## 0 Important note
+## 0. Important note
 1. [Disclaimer] Not intended for running for the same cluster.
 2. [Hardware] Make sure the machine is capable for running multiple nodes.
 3. [Ports] Different ports are needed for different nodes, DO NOT use the same ports. Instruction on how to change the port can be found below.  
