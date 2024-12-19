@@ -1,6 +1,6 @@
 # Multiple Charon nodes on one machine
 
-TLDR: Docker compose makes this setup very easy. Clone this folder into a new directory and they will run as two isolated instance.
+TLDR: Docker compose makes this setup very easy. Clone the repo to a new directory and they will run as two isolated instances.
 
 ## Clone the charon repo into separate directories
 Specify a directory when cloning the repo, for example `charon-distributed-validator-node-1`:
