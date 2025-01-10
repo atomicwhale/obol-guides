@@ -1,4 +1,4 @@
-# Multiple Charon nodes on one machine
+# Multiple Charon nodes on a single machine
 
 TLDR: Docker compose makes this setup very easy. Clone the Charon Distributed Validator Node (CDVN) repo to a new directory and they will run as two isolated instances.
 
