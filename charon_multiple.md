@@ -3,13 +3,13 @@
 TLDR: Docker compose makes this setup very easy. Clone the repo to a new directory and they will run as two isolated instances.
 
 ### 0. Important note
-1. [Disclaimer] Not intended for running for the same cluster.
-2. [Hardware] Make sure the machine is capable for running multiple nodes.
-3. [Ports] Different ports are needed for different nodes, DO NOT use the same ports. Instruction on how to change the port can be found below.  
-4. [Note on Port forwarding]
+1. [Disclaimer] This setup is for testig, or running multiple nodes for different clusters. It is highly reccomanded to run each nodes on separated machines in a production environment.  
+2. [Hardware] Make sure the machine is capable for running multiple nodes. A rough guide is ~1.5 GB RAM per node (without EC/BN).
+3. [Ports] Different P2P ports are needed for different nodes, DO NOT use the same ports. Instruction on how to change the port can be found below.  
+4. [Note] Each P2P port need to be forwarded if you are running behind a NAT (e.g. home router/gateway).
 
 ### 1. Clone the charon repo into separate directories  
-Specify a directory when cloning the repo, for example `charon-distributed-validator-node-1`:  
+1. Specify a directory when cloning the repo, for example `charon-distributed-validator-node-1`:  
 ```
 # Clone the repo
 git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git charon-distributed-validator-node-1`
@@ -17,17 +17,22 @@ git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git c
 cd charon-distributed-validator-node-1/
 ```
 
-If you want to creat another charon node, change the name of the folder to, for example `charon-distributed-validator-node-2`  
+2. If you want to creat another charon node, change the name of the folder to, for example `charon-distributed-validator-node-2`  
+notice the folder name is different, it ends with "-2" instead of "-1" in the above axample.  
+
 ```
-# Clone the repo
-git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git charon-distributed-validator-node-2`
-# Change directory
+# Copy the directory
+cp -r charon-distributed-validator-node-1/ charon-distributed-validator-node-2/`
+# Go into the directory
 cd charon-distributed-validator-node-2/
 ```
-Repeat the above step if you want to run more than 2 Charon nodes.  
+If you are cloning from a current charon directory which already contains an ENR and relervant cluster files, make sure to remove them before you try to start it.
+```
+# Remove all previous cluster configuration
+rm -r .charon/
+```
 
-The configuration of each node needs to be done separatly under at each folder.  
-Look at the official guide for other steps requires for setting up a Charon node: [official guide] (https://docs.obol.org/run/start/quickstart_group) or other [guide here](https://github.com/atomicwhale/obol-guides)  
+3. Repeat the above step if you want to run more than 2 Charon nodes.  
 
 After configuration, the folder and file structure will look like this:  
 ```
@@ -45,9 +50,13 @@ After configuration, the folder and file structure will look like this:
 ...
 ```
 
+### 2. Adjust Charon configuration  
+The configuration of each node needs to be done separatly under each folder. Most of the settings can be done in `.env` and `docker-compose.override.yml` files.  
+Look at the official guide for other steps requires for setting up a Charon node: [official guide] (https://docs.obol.org/run/start/quickstart_group) or other [guide here](https://github.com/atomicwhale/obol-guides)  
 
-### 2. Adjust Charon ports  
-Each Charon need a different P2P ports (3610 by default)
+Ports that are mapped to the host machine also needs to be adjusted to avoid conflicts.
+
+1. Each additional Charon needs a different P2P ports (3610 by default)
 (If you are configuring Charon for the first time, start with the template by running `cp .env.sample.mainnet .env`(mainnet) or `cp .env.sample.holesky .env` (holesky))  
 `nano .env`
 Uncomment the P2P port line and add your port here (3611 for example), it shoud look like this after:  
@@ -57,6 +66,19 @@ CHARON_PORT_P2P_TCP=3611
 ```
 * (You will need to do portforwarding for each Charon port if you are running behind a NAT. Google is your friend, search for port forwarding guide for the specific router/gateway model you have)  
 
+2. Change Grafana port
+Each additional Grafana  needs to be mapped to another port.
+For example, we can change the Grafana on the 2nd Charon node to 3001.
+The settings can be changed in the `.env` file
+`nano .env`
+Uncomment the Grafana port line and change the port number (e.g. 3001)
+It should now looks like this:
+```
+# Grafana host exposed ip and port.
+#MONITORING_IP_GRAFANA=
+MONITORING_PORT_GRAFANA=3001
+```
+
 ### 3. Start Charon  
 Start Charon by running  
 `docker compose up -d`  
@@ -64,12 +86,13 @@ Start Charon by running
 
 ### 4. Check if Charon is running successfuly
 
-Check the logs of the Charon container by using:
-docker logs charon-distributed-validator-node-charon-1 --tail 50 -f
-(Tips: Using auto complete - You can try pressing Tab after typeing the first few letters of the container name)
-You can monitor the logs here if needed, and use Ctrl+C to breakout from the logs.
+Check the logs of different Charon containers by using:
+`docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`
+`docker logs charon-distributed-validator-node-charon-2 --tail 50 -f`
+You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.
+If Charon cannot connect to the beacon node, you will see an error:
 
-    If Charon cannot connect to the beacon node, you will see an error: ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}
+    ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}
 
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
 -----------
