@@ -11,14 +11,14 @@ The basic principles are the same across all these guides. These guides aims to 
 ## Minimum/Recommended Hardware (local machine or VPS)
 - **Node (with/without Charon)**  
  CPU: 4+ core  
- RAM: 16/32 GB (16 GB only works with some client combinations)  
- SSD: 2/4 TB NVMe (TLC wiht DRAM)  
-  *Please also refer to the excellent guides from [ETH-Staker](https://ethstaker.cc/staking-hardware) and ETH-Docker [SSD guide](https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038).*
+ RAM: 24+ GB  
+ SSD: 2/4 TB NVMe (TLC with DRAM)  
+  *Please refer to the excellent guides from [ETH-Staker](https://ethstaker.cc/staking-hardware) and ETH-Docker [SSD guide](https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038).*
   
 - **Charon (without EC/BN)**  
  CPU: 1/2+ core  
- RAM: 1/2 GB (While 1 GB works, 2+ GB is highly recommended)  
- Disk: Few GB  
+ RAM: 1/2 GB (While 1 GB works, 2+ GB is highly recommended) each Charon node  
+ Disk: A few GBs  
 
 ## Guides
 1. [Running Charon with Native Execution/Consensus Clients](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-native.md)  
