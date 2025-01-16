@@ -20,12 +20,16 @@ Stop **BEFORE** you do Step 4 and modify you configurations following the guide 
 ### 1. Disable EC/CC included in the Charon docker package
 (This step is taken from the official guide, you can find it in the official guide [Step 4: Existing Beacon Node](https://docs.obol.org/run/start/quickstart_group#step-4-start-your-distributed-validator-node)  
 1. Create the `docker-compose.override.yml` file from the example  
-```cp -n docker-compose.override.yml.sample docker-compose.override.yml```
+```
+cp -n docker-compose.override.yml.sample docker-compose.override.yml
+```
 
-2. Modify `docker-compose.override.yml` file using an editor (`nano` for example)  
-```nano docker-compose.override.yml```  
-    * Uncomment both `nethermind` and `lighthouse` under `services`.  
-    * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
+3. Modify `docker-compose.override.yml` file using an editor (`nano` for example)  
+```
+nano docker-compose.override.yml
+```
+   * Uncomment both `nethermind` and `lighthouse` under `services`.  
+   * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
 The override file should now look like this:  
 ```
 services:
@@ -50,7 +54,9 @@ Use `Ctrl+O` and `Ctrl+X` to save and exit if you using `nano`.
 
 ### 2. Configure Charon to use local Beacon node (Consensus client)  
 1. Check the local Beacon node is reachable  
-`curl http://localhost:5052/eth/v1/node/syncing`  
+```
+curl http://localhost:5052/eth/v1/node/syncing
+```
 You should see something like this:  
 > {"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}
 
@@ -59,7 +65,9 @@ which indicates that the beaconnode is reachable at localhost, and `sync_distanc
 2. Modify `docker-compose.override.yml` so Charon can connect to host network  
 (Docker compose creates a [new docker network by default](https://docs.docker.com/compose/how-tos/networking/), containers within the network cannot reach service running on host without further configuration)  
 Modify the `docker-compose.override.yml` file using an editor  
-`nano docker-compose.override.yml`  
+```
+nano docker-compose.override.yml
+```
 Uncomment the `charon` line, and add two lines for `extra_host`.  
 It should now look like this:  
 ```
@@ -81,7 +89,9 @@ cp .env.sample.holesky .env
 cp .env.sample.mainnet .env
 ```
 Modify the BN endpoint in the `.env` file  
-`nano .env`  
+```
+nano .env
+```
 Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
 The section should now look like this:  
 ```
@@ -105,18 +115,24 @@ The section should now look like this:
 
 ### 3. Start Charon  
 *Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)*  
-*`cd ~/charon-distributed-validator-node`*  
+```
+cd ~/charon-distributed-validator-node
+```
 Start Charon by running  
-`docker compose up -d`  
+```
+docker compose up -d
+```
 
 ### 4. Check if Charon is running successfuly  
 Check the logs of the Charon container by using `docker logs <charon-container-name> -f`, for example:  
-`docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`  
+```
+docker logs charon-distributed-validator-node-charon-1 --tail 50 -f
+```
 (Tips: Using auto complete - You can try pressing `Tab` after typeing the first few letters of the container name)  
 You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.
 
-- If Charon cannot connect to the beacon node, you will see an error:
-`ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}`  
+- If Charon cannot connect to the beacon node, you will see an error:  
+>ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}  
 
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
 
