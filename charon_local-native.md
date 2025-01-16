@@ -80,8 +80,8 @@ cp .env.sample.holesky .env
 # For Ethereum mainnet
 cp .env.sample.mainnet .env
 ```
-Modify the BN endpoint in the `.env` file
-`nano .env`
+Modify the BN endpoint in the `.env` file  
+`nano .env`  
 Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
 The section should now look like this:  
 ```
@@ -90,10 +90,10 @@ CHARON_BEACON_NODE_ENDPOINTS=http://host.docker.internal:5052
 ```
 Save and exit.  
 
-4. Disable mev-boost
+4. Disable mev-boost  
 *Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
-You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).
-Thei section should look liek this:
+You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
+The section should now look like this:  
 ```
   mev-boost:
     # Disable mev-boost
