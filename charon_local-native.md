@@ -80,6 +80,8 @@ cp .env.sample.holesky .env
 # For Ethereum mainnet
 cp .env.sample.mainnet .env
 ```
+Modify the BN endpoint in the `.env` file
+`nano .env`
 Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
 The section should now look like this:  
 ```
