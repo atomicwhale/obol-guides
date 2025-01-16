@@ -1,7 +1,7 @@
 # Running Charon with Existing Execution/Consensus Clients
 
 Charon is a middleware built by Obol to enable any existing Ethereum validator clients to operate together as part of a distributed validator.  
-Users are highly recommended to go through [Obol's official documetation](https://docs.obol.org/int/Overview) first to have a basic understanding of how a Charon DVT cluster works.
+Users are highly recommended to go through [Obol's official documetation](https://docs.obol.org/run/start/quickstart_overview) first to have a basic understanding of how a Charon DVT cluster works.
 
 ## Overview
 These guides are created for pepole who want to run Charon with their existing execution/consensus clients.  
