@@ -128,7 +128,7 @@ If Charon fails to connect to the beacon node, double check everything has been 
 ## Tips and Tricks
 ### Removing unused volumes  
 If you have already started Charon before you disable Nethermind and Lighthouse, you will have the docker containers and volumes which take up some space on your disk.  
-They can removed by running `docker volume prune -a` and choose `yes`. This will remove all local volumes not used by at least one container!  
+They can removed by running `docker volume prune` and choose `yes`. This will remove all local volumes not used by at least one container!  
 
 ### Port forwarding
 Port forwarding is required if the machine is behind NAT. Charon use port 3610/tcp by defaut. This needs to be forwarded to your node. Please search for guide on how to do it for your specific router/gateway.  
