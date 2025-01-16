@@ -109,7 +109,7 @@ Start Charon by running
 (Make sure you are running this command in the charon folder, it should be `charon-distributed-validator-node` by default)
 
 ### 4. Check if Charon is running successfuly  
-Check the logs of the Charon container by using:  
+Check the logs of the Charon container by using `docker logs <charon-container-name> -f`, for example:  
 `docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`  
 (Tips: Using auto complete - You can try to press `Tab` after typeing out the first few letters of the command/container name)  
 You can monitor the logs here, and use `Ctrl+C` to breakout from the logs.
