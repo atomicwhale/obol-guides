@@ -51,6 +51,18 @@ services:
       #- 5054:5054 # Metrics
 ```
 Use `Ctrl+O` and `Ctrl+X` to save and exit if you using `nano`.
+4. (Optional) Disable mev-boost  
+*Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
+You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
+The section should now look like this:  
+```
+  mev-boost:
+    # Disable mev-boost
+    profiles: [disable]
+    # Bind mev-boost internal ports to host ports
+    #ports:
+      #- 18550:18550 # Metrics
+```
 
 ### 2. Configure Charon to use local Beacon node (Consensus client)  
 1. Check the local Beacon node is reachable  
@@ -99,19 +111,6 @@ The section should now look like this:
 CHARON_BEACON_NODE_ENDPOINTS=http://host.docker.internal:5052
 ```
 Save and exit.  
-
-4. Disable mev-boost  
-*Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
-You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
-The section should now look like this:  
-```
-  mev-boost:
-    # Disable mev-boost
-    profiles: [disable]
-    # Bind mev-boost internal ports to host ports
-    #ports:
-      #- 18550:18550 # Metrics
-```
 
 ### 3. Start Charon  
 *Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)*  
