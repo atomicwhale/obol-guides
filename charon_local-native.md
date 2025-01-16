@@ -72,7 +72,15 @@ It should now look like this:
 ```
 Save and exit.  
 
-3. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
+3. Configure CDVN in the `.env` file
+First create the `.env` file using the template provided:
+```
+# For Holesky testnet
+cp .env.sample.holesky .env
+# For Ethereum mainnet
+cp .env.sample.mainnet .env
+```
+Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
 The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
