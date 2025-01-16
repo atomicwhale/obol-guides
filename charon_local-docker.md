@@ -95,22 +95,32 @@ The section should now look like this:
 CHARON_BEACON_NODE_ENDPOINTS=http://eth2:5052
 ```
 
-4. (Optional) Disable mev-boost  
-You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
+4. Disable mev-boost  
 *Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
+You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
+The section should now look like this:  
+```
+  mev-boost:
+    # Disable mev-boost
+    profiles: [disable]
+    # Bind mev-boost internal ports to host ports
+    #ports:
+      #- 18550:18550 # Metrics
+```
 
 ### 3. Start Charon  
+*Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)*  
+*`cd ~/charon-distributed-validator-node`*  
 Start Charon by running  
-(Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)
 `docker compose up -d`  
 
 ### 4. Check if Charon is running successfuly  
-Check the logs of the Charon container by using:  
+Check the logs of the Charon container by using `docker logs <charon-container-name> -f`, for example:  
 `docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`  
 (Tips: Using auto complete - You can try pressing `Tab` after typeing the first few letters of the container name)  
 You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.
 
-- If Charon cannot connect to the beacon node, you will see an error:
+- If Charon cannot connect to the beacon node, you will see an error:  
 `ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}`  
 
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
