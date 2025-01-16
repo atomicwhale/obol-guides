@@ -35,17 +35,18 @@ This is the docker network where you EC/CC are running. In the next step, we wil
 
 ### 2. Disable EC/CC included in the Charon docker package
 (This step is taken from the official guide, you can find it in the official guide [Step 4: Existing Beacon Node](https://docs.obol.org/run/start/quickstart_group#step-4-start-your-distributed-validator-node)  
-
-0. (Change our working directory to where charon is located `cd charon-distributed-validator-node/`)  
-
 1. Create the `docker-compose.override.yml` file from the example  
-`cp -n docker-compose.override.yml.sample docker-compose.override.yml`  
+```
+cp -n docker-compose.override.yml.sample docker-compose.override.yml
+```
 
-2. Modify `docker-compose.override.yml` file using an editor (`nano` for example)  
-`nano docker-compose.override.yml`  
-    * Uncomment both `nethermind` and `lighthouse` under `services`.  
-    * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.
-The section in the override file should now look like this:  
+3. Modify `docker-compose.override.yml` file using an editor (`nano` for example)  
+```
+nano docker-compose.override.yml
+```
+   * Uncomment both `nethermind` and `lighthouse` under `services`.  
+   * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
+The override file should now look like this:  
 ```
 services:
   nethermind:
@@ -64,6 +65,19 @@ services:
     #ports:
       #- 5052:5052 # HTTP
       #- 5054:5054 # Metrics
+```
+Use `Ctrl+O` and `Ctrl+X` to save and exit if you using `nano`.
+4. (Optional) Disable mev-boost  
+*Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
+You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
+The section should now look like this:  
+```
+  mev-boost:
+    # Disable mev-boost
+    profiles: [disable]
+    # Bind mev-boost internal ports to host ports
+    #ports:
+      #- 18550:18550 # Metrics
 ```
 
 ### 3. Configure Charon to use additional docker network
