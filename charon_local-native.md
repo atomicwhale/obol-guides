@@ -18,7 +18,7 @@ Please follow the [official guide](https://docs.obol.org/run/start/quickstart_gr
 Stop **BEFORE** you do Step 4 and modify you configurations following the guide below.  
 
 ### 1. Disable EC/CC included in the Charon docker package
-(This step is taken from the official guide, you can find it in the official guide [Step 4: Existing Beacon Node](https://docs.obol.org/start/quickstart_group#step-4-start-your-distributed-validator-node))  
+(This step is taken from the official guide, you can find it in the official guide [Step 4: Existing Beacon Node](https://docs.obol.org/run/start/quickstart_group#step-4-start-your-distributed-validator-node)  
 1. Create the `docker-compose.override.yml` file from the example  
 `cp -n docker-compose.override.yml.sample docker-compose.override.yml`  
 
