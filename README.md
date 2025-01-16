@@ -31,5 +31,5 @@ This guide covers running Charon with local EC/BN managed by a docker-based stac
 This guide covers running Charon with remote EC/BN. For people who already have EC/BN running on a remote/differnt machine, and want to run Charon separately (for example a small VPS).  
 
 Other guides  
-1. [Running Multiple Charon instances on one machine](https://github.com/atomicwhale/obol-guides/blob/main/charon_multiple.md)  
+4. [Running Multiple Charon instances on one machine](https://github.com/atomicwhale/obol-guides/blob/main/charon_multiple.md)  
    This guide covers steps to run multiple Charon instaces on one machine.  
