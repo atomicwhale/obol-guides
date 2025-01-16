@@ -104,15 +104,16 @@ The section should now look like this:
 ```
 
 ### 3. Start Charon  
+*Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)*  
+*`cd ~/charon-distributed-validator-node`*  
 Start Charon by running  
 `docker compose up -d`  
-(Make sure you are running this command in the charon folder, it should be `charon-distributed-validator-node` by default)
 
 ### 4. Check if Charon is running successfuly  
 Check the logs of the Charon container by using `docker logs <charon-container-name> -f`, for example:  
 `docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`  
-(Tips: Using auto complete - You can try to press `Tab` after typeing out the first few letters of the command/container name)  
-You can monitor the logs here, and use `Ctrl+C` to breakout from the logs.
+(Tips: Using auto complete - You can try pressing `Tab` after typeing the first few letters of the container name)  
+You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.
 
 - If Charon cannot connect to the beacon node, you will see an error:
 `ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}`  
