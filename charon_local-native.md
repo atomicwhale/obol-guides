@@ -14,7 +14,7 @@ We will setup Charon in docker using the Obol official docker package and point 
 
 ## Configuration
 ### 0. Initial setup  
-Please follow the [official guide](https://docs.obol.org/start/quickstart_group) **Step 1-3** to download Charon, set up the ENR, join a cluster, and run a DKG.  
+Please follow the [official guide](https://docs.obol.org/run/start/quickstart_group) **Step 1-3** to download Charon, set up the ENR, join a cluster, and run a DKG.  
 Stop **BEFORE** you do Step 4 and modify you configurations following the guide below.  
 
 ### 1. Disable EC/CC included in the Charon docker package
@@ -54,14 +54,14 @@ Use `Ctrl+O` and `Ctrl+X` to save and exit if you using `nano`.
 You should see something like this:  
 > {"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}
 
-which indicates that the beaconnode is reachable at localhost, and `sync_distance` at (0 or 1) and `is_syncing` is (false) which suggest the consensus client is synced.  
+which indicates that the beaconnode is reachable at localhost, and `sync_distance` at (0 or 1) and `is_syncing` is (false) which suggest the consensus client is fully synced.  
 
 2. Modify `docker-compose.override.yml` so Charon can connect to host network  
 (Docker compose creates a [new docker network by default](https://docs.docker.com/compose/how-tos/networking/), containers within the network cannot reach service running on host without further configuration)  
 Modify the `docker-compose.override.yml` file using an editor  
 `nano docker-compose.override.yml`  
-Uncomment the `charon` line, and the two lines for `extra_host`.  
-It should looke like this:  
+Uncomment the `charon` line, and add two lines for `extra_host`.  
+It should now look like this:  
 ```
   charon:
     # Configure any additional env var flags in .env.charon.more
@@ -80,20 +80,29 @@ CHARON_BEACON_NODE_ENDPOINTS=http://host.docker.internal:5052
 ```
 Save and exit.  
 
-4. (Optional) Disable mev-boost  
-You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
+4. Disable mev-boost
 *Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
+You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).
+Thei section should look liek this:
+```
+  mev-boost:
+    # Disable mev-boost
+    profiles: [disable]
+    # Bind mev-boost internal ports to host ports
+    #ports:
+      #- 18550:18550 # Metrics
+```
 
 ### 3. Start Charon  
 Start Charon by running  
-(Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)
 `docker compose up -d`  
+(Make sure you are running this command in the charon folder, it should be `charon-distributed-validator-node` by default)
 
 ### 4. Check if Charon is running successfuly  
 Check the logs of the Charon container by using:  
 `docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`  
-(Tips: Using auto complete - You can try pressing `Tab` after typeing the first few letters of the container name)  
-You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.
+(Tips: Using auto complete - You can try to press `Tab` after typeing out the first few letters of the command/container name)  
+You can monitor the logs here, and use `Ctrl+C` to breakout from the logs.
 
 - If Charon cannot connect to the beacon node, you will see an error:
 `ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}`  
@@ -103,7 +112,7 @@ If Charon fails to connect to the beacon node, double check everything has been 
 ## Tips and Tricks
 ### Removing unused volumes  
 If you have already started Charon before you disable Nethermind and Lighthouse, you will have the docker containers and volumes which take up some space on your disk.  
-They can removed by running `docker volume prune -a` and choose `yes`. This will remove all local volumes not used by at least one container!  
+They can removed by running `docker volume prune` and choose `yes`. This will remove all local volumes not used by at least one container!  
 
 ### Port forwarding
 Port forwarding is required if the machine is behind NAT. Charon use port 3610/tcp by defaut. This needs to be forwarded to your node. Please search for guide on how to do it for your specific router/gateway.  
