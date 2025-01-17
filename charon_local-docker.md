@@ -107,7 +107,8 @@ Save and exit.
 
 ### 4. Configure Charon to use local Beacon node (Consensus client)  
 1. Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file.  
-(Both ETH-docker and Rocketpool Smart Node uses alias `eth1`/`eth2` for their EC/CC, so the same setting can be use here)  
+(`http://eth2:port` works for both RP SmartNode and Eth-docker)
+(`http://consensus:port` works for both Eth-docker and Sedge)
 The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
