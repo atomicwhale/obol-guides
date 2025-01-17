@@ -76,7 +76,9 @@ The section should now look like this:
 
 ### 2. Configure Charon to use remote Beacon node (Consensus client)  
 1. Check the remote Beacon node is reachable  
-`curl http://REMOTE_IP:5052/eth/v1/node/syncing`  
+```
+curl http://REMOTE_IP:5052/eth/v1/node/syncing
+```  
 You should see something like this:  
 > {"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}
 
@@ -95,14 +97,6 @@ Save and exit.
 ### 3. Start Charon  
 Start Charon by running  
 (Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)
-`docker compose up -d`  
-
-### 4. Check if Charon is running successfuly  
-*Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)*  
-```
-cd ~/charon-distributed-validator-node
-```
-Start Charon by running  
 ```
 docker compose up -d
 ```
