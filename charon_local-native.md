@@ -14,7 +14,7 @@ We will setup Charon in docker using the Obol official docker package and point 
 
 ## Configuration
 ### 0. Initial setup  
-1. First, your BN has to be configured to expose the validator REST port (e.g. 5052) at 0.0.0.0. Refer to the client' guide for this.
+1. First, your BN has to be configured to expose the validator REST port (e.g. 5052) at `0.0.0.0`. Refer to the client' guide for this.  
 For example, the BN will need the following flags
 ```
 # Nimbus
