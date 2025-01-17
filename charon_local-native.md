@@ -93,11 +93,13 @@ It should now look like this:
 Save and exit.  
 
 3. Configure CDVN in the `.env` file
-First create the `.env` file using the template provided:
+First create the `.env` file using the template provided:  
+For Holesky testnet  
 ```
-# For Holesky testnet
 cp .env.sample.holesky .env
-# For Ethereum mainnet
+```
+For Ethereum mainnet  
+```
 cp .env.sample.mainnet .env
 ```
 Modify the BN endpoint in the `.env` file  
