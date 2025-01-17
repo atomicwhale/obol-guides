@@ -28,7 +28,7 @@ cp -n docker-compose.override.yml.sample docker-compose.override.yml
 ```
 nano docker-compose.override.yml
 ```
-   * Uncomment both `nethermind` and `lighthouse` under `services`.  
+   * Uncomment `service`, and both `nethermind` and `lighthouse` under `services`.  
    * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
 The override file should now look like this:  
 ```
