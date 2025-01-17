@@ -33,6 +33,7 @@ NETWORK ID     NAME                 DRIVER    SCOPE
 ```
 - If you are running ETH-docker, you will notice a bridge network called `eth-docker_default`. (This first part of the network name will be the same as the name of the folder where ETH-docker is located).
 - If you are running Rocketpool Smart Node, you will notice a bridge network called `rockerpool_net`.
+- If you are running Sedge, you will notice a bridge network called `sedge`.
   
 This is the docker network where you EC/CC are running. In the next step, we will connect charon to this network so it can talk to the EC/BN.  
 
