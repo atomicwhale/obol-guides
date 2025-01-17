@@ -29,7 +29,7 @@ For example, the BN will need the following flags
 --rpc-host=0.0.0.0
 ```
 For EthPillar, it can be done by going to `Consensus Client` - `8 Expose consensus client RPC Port`  
-![Alt text](screenshots/ethpillar.png?raw=true "ethpillar")
+![Alt text](screenshots/ethpillar.png?raw=true)
   
 2. Make sure this port is protected behind a firewall, because you don't want random people on the internet to connect to it. Please refer to other firewall guides for this.  
 
@@ -85,7 +85,7 @@ The section should now look like this:
 
 ### 2. Configure Charon to use local Beacon node (Consensus client)  
 1. Check the local Beacon node is reachable at `localhost:<port-number>`
-2. Fpr example
+2. For example
 ```
 curl http://localhost:5052/eth/v1/node/syncing
 ```
@@ -154,11 +154,16 @@ Check the logs of the Charon container by using `docker logs <charon-container-n
 docker logs charon-distributed-validator-node-charon-1 --tail 50 -f
 ```
 (Tips: Using auto complete - You can try pressing `Tab` after typeing the first few letters of the container name)  
-You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.
-
+You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.  
+- If Charon connects to the BN sucessfully, you should not see any error.  
+The logs will look like this if it can connect to the BN:  
+![Alt text](screenshots/charon-connection-success.png?raw=true)
+  
 - If Charon cannot connect to the beacon node, you will see an error:  
->ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}  
+>ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}
 
+The logs will look like this if it fail to connect to the BN:  
+![Alt text](screenshots/charon-connection-fail.png?raw=true)
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
 
 ## Tips and Tricks
