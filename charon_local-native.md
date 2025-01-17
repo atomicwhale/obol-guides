@@ -106,7 +106,7 @@ Modify the BN endpoint in the `.env` file
 ```
 nano .env
 ```
-Set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
+Uncomment and set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
 The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
