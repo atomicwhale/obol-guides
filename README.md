@@ -25,7 +25,7 @@ The basic principles are the same across all these guides. These guides aims to 
 This guide covers running Charon with local EC/BN running as system service (systemd). For example, if you have followed one of these guides (Somer Esat Guides / CoinCashew Guides / EthPilar) to set up your node.  
   
 2. [Running Charon with Docker Execution/Consensus Clients](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md)  
-This guide covers running Charon with local EC/BN managed by a docker-based stack (ETH-Docker/Rocket Pool Smart Node).
+This guide covers running Charon with local EC/BN managed by a docker-based stack (ETH-Docker/Rocket Pool Smart Node/Sedge).
 
 3. [Running Charon with remote EC/BN](https://github.com/atomicwhale/obol-guides/blob/main/charon_remote.md)  
 This guide covers running Charon with remote EC/BN. For people who already have EC/BN running on a remote/differnt machine, and want to run Charon separately (for example a small VPS).  
