@@ -14,7 +14,26 @@ We will setup Charon in docker using the Obol official docker package and point 
 
 ## Configuration
 ### 0. Initial setup  
-Please follow the [official guide](https://docs.obol.org/run/start/quickstart_group) **Step 1-3** to download Charon, set up the ENR, join a cluster, and run a DKG.  
+1. First, your BN has to be configured to expose the validator REST port (e.g. 5052) at 0.0.0.0. Refer to the client' guide for this.
+For example, the BN will need the following flags
+```
+# Nimbus
+--rest-address=0.0.0.0
+# Lighthouse
+--http-address=0.0.0.0
+# Teku
+--validator-api-interface=0.0.0.0
+# Lodestar
+--rest.address=0.0.0.0
+# Prysm
+--rpc-host=0.0.0.0
+```
+For EthPillar, it can be done by going to `Consensus Client` - `8 Expose consensus client RPC Port`  
+![Alt text](screenshots/ethpillar.png?raw=true "ethpillar")
+  
+2. Make sure this port is protected behind a firewall, because you don't want random people on the internet to connect to it. Please refer to other firewall guides for this.  
+
+3. Please follow the [official guide](https://docs.obol.org/run/start/quickstart_group) **Step 1-3** to download Charon, set up the ENR, join a cluster, and run a DKG.  
 Stop **BEFORE** you do Step 4 and modify you configurations following the guide below.  
 
 ### 1. Disable EC/CC included in the Charon docker package
@@ -65,7 +84,8 @@ The section should now look like this:
 ```
 
 ### 2. Configure Charon to use local Beacon node (Consensus client)  
-1. Check the local Beacon node is reachable  
+1. Check the local Beacon node is reachable at `localhost:<port-number>`
+2. Fpr example
 ```
 curl http://localhost:5052/eth/v1/node/syncing
 ```
