@@ -19,7 +19,9 @@ Stop **BEFORE** you do Step 4 and modify you configurations following the guide 
 
 ### 1. Inspect Docker network
 We firt need to find out what docker network are running on the local machine.  
-`docker network ls`  
+```
+docker network ls
+```
 This should show you a list of all the Docker networks, it should look like this:
 ```
 NETWORK ID     NAME                 DRIVER    SCOPE
@@ -30,7 +32,8 @@ NETWORK ID     NAME                 DRIVER    SCOPE
 839941bca9ab   none                 null      local
 ```
 - If you are running ETH-docker, you will notice a bridge network called `eth-docker_default`. (This first part of the network name will be the same as the name of the folder where ETH-docker is located).
-- If you are running Rocketpool Smart Node, you will notice a bridge network called `rockerpool_net`.  
+- If you are running Rocketpool Smart Node, you will notice a bridge network called `rockerpool_net`.
+  
 This is the docker network where you EC/CC are running. In the next step, we will connect charon to this network so it can talk to the EC/BN.  
 
 ### 2. Disable EC/CC included in the Charon docker package
@@ -44,7 +47,7 @@ cp -n docker-compose.override.yml.sample docker-compose.override.yml
 ```
 nano docker-compose.override.yml
 ```
-   * Uncomment both `nethermind` and `lighthouse` under `services`.  
+   * Uncomment `service`, and both `nethermind` and `lighthouse` under `services`.  
    * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
 The override file should now look like this:  
 ```
@@ -79,18 +82,20 @@ The section should now look like this:
     #ports:
       #- 18550:18550 # Metrics
 ```
-
 ### 3. Configure Charon to use additional docker network
 (This following step use ETH-docker `eth-docker_default` as example, please adjust if you are running Rocketpool Smartnode or other packages)  
 1. Modify `charon` section in `docker-compose.override.yml` file  
-(`nano docker-compose.override.yml`)  
-Uncomment line `charon` under the service section, and add additional network configureation here.
+```
+nano docker-compose.override.yml
+```
+Uncomment line `charon` under the service section, and add additional network configureation here.  
 The section in the override file should now look like this:  
 ```
   charon:
     networks:
       - eth-docker_default
 ```
+
 2. Add the follow lines to the bottom of the file:
 ```
 networks:
@@ -107,19 +112,6 @@ The section should now look like this:
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
 CHARON_BEACON_NODE_ENDPOINTS=http://eth2:5052
-```
-
-4. Disable mev-boost  
-*Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
-You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
-The section should now look like this:  
-```
-  mev-boost:
-    # Disable mev-boost
-    profiles: [disable]
-    # Bind mev-boost internal ports to host ports
-    #ports:
-      #- 18550:18550 # Metrics
 ```
 
 ### 3. Start Charon  
