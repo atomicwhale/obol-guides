@@ -97,7 +97,9 @@ cd charon-distributed-validator-node-1/
 ```
 
 Start Charon by running  
-`docker compose up -d`  
+```
+docker compose up -d
+```  
 (Make sure you are running this command under the correct charon folder. You will need to run this again for each charon node under their correspding directories)  
 
 ### 4. Check if Charon is running successfuly
@@ -105,13 +107,28 @@ Start Charon by running
 Check the logs of different Charon containers by using:
 `docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`
 `docker logs charon-distributed-validator-node-charon-2 --tail 50 -f`
-You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.
-If Charon cannot connect to the beacon node, you will see an error:
-
-    ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}
-
-If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
+(Tips: Using auto complete - You can try pressing `Tab` after typeing the first few letters of the container name)  
+You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.  
+- If Charon connects to the BN sucessfully, you should not see any error.  
+The logs will look like this if it can connect to the BN:  
+![Alt text](screenshots/charon-connection-success.png?raw=true)
   
+- If Charon cannot connect to the beacon node, you will see an error:  
+>ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}
+
+The logs will look like this if it fail to connect to the BN:  
+![Alt text](screenshots/charon-connection-fail.png?raw=true)
+If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on discord and ask for help.  
+
+## Tips and Tricks
+### Removing unused volumes  
+If you have already started Charon before you disable Nethermind and Lighthouse, you will have the docker containers and volumes which take up some space on your disk.  
+They can removed by running `docker volume prune` and choose `yes`. This will remove all local volumes not used by at least one container!  
+
+### Port forwarding
+Port forwarding is required if the machine is behind NAT. Charon use port 3610/tcp by defaut. This needs to be forwarded to your node. Please search for guide on how to do it for your specific router/gateway.  
+You can use tools such as [yougetsignal](https://www.yougetsignal.com/tools/open-ports/) to check wheter the port are open corrently.
+
 -----------
 **Some other guides here to help with setting up CDVN**  
 https://github.com/atomicwhale/obol-guides/blob/main/README.md
