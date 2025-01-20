@@ -6,8 +6,9 @@ TLDR: Docker compose makes this setup very easy. Clone the Charon Distributed Va
 
 This guide is based on this assumptions:  
 **You are runing the BN/EC separately to Charon.** This is highly recommended because it makes managing each Charon node much easier, and you don't need to bring the BN/EC down when making changes to the ocnfiguration.
+**If you arae running one CDVN with the EC/BN clients and wants to spin up more CDVN instance on the same machine. Please read the short section "Pluggin more Charon to one CDVN with EC/BN" at the end of the guide.
   
-1. [Disclaimer] This setup is for testig, or running multiple nodes for different clusters. It is highly reccomanded to run each nodes on separated machines in a production environment.  
+1. [Disclaimer] This setup is for testing, or if you are running multiple nodes for different clusters. Please do not run more than one Charon nodes from the same cluster on a single machine as it creats a single point of failure. Please run each node on a separated machine in a production environment.  
 2. [Hardware] Make sure the machine is capable of running multiple nodes. Around 1-1.5 GB RAM is needed per node (without EC/BN).
 3. [Ports] Different P2P ports are needed for different nodes, DO NOT use the same ports. Instruction on how to change the port can be found below.  
 4. [Note] Each P2P port need to be forwarded if you are running behind a NAT (e.g. home router/gateway).
@@ -120,7 +121,33 @@ The logs will look like this if it fail to connect to the BN:
 ![Alt text](screenshots/charon-connection-fail.png?raw=true)
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on discord and ask for help.  
 
-## Tips and Tricks
+## Tips and Tricks  
+### Pluggin more Charon to one CDVN with EC/BN  
+If you already have a CDVN with EC/BN (Nethermind/Lighthouse) running, and want to spin up more CDVNs on the same machine. You can use docker network to achieve it. Follow the previous steps in this guide to put additional CDVN in their own folder, and configure them with extra external docker network settings: please look at [this guide](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md) here for more detail steps. If you have EC/BN running in your Charon1 (in `charon1_default` docker network), for Charon2,3... you will need to add these lines in the docker compose override file. 
+1. Disable EC/BN in the additional Charon nodes.  
+2. Modify charon section in docker-compose.override.yml file  
+```
+nano docker-compose.override.yml
+```
+Uncomment line charon under the service section, and add additional network configureation here.  
+The section in the override file should now look like this:  
+```
+  charon:
+    networks:
+      - charon1_default
+```
+Add the follow lines to the bottom of the file:  
+```
+networks:
+  eth-docker_default:
+    name: charon1_default
+    external: true
+```
+3. Point additional Charon nodes to the BN running in Charon1, edit the `.env` file:  
+```
+CHARON_BEACON_NODE_ENDPOINTS=http://lighthouse:5052
+```
+
 ### Removing unused volumes  
 If you have already started Charon before you disable Nethermind and Lighthouse, you will have the docker containers and volumes which take up some space on your disk.  
 They can removed by running `docker volume prune` and choose `yes`. This will remove all local volumes not used by at least one container!  
