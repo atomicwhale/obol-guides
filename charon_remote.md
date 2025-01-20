@@ -19,7 +19,7 @@ A few things to consider when you are using a remote BN.
    - If you are running Rocketpool Smart Node, please choose `Open to exteranl hosts` on the Beacon Node configureation page.  
 2. If using `ufw` and `docker`, please follow this [guide](https://ethdocker.com/Support/Cloud) to ensure firewall is working properly for docker.  
    - Use a port checker such as `https://www.yougetsignal.com/tools/open-ports/` to test your port 5052 on the BN IP. It should be closed to the public network.  
-   - Use `curl http://BN-IP:5052/eth/v1/node/syncing` to check if you acn reach your BN from your Charon machine.  
+   - Use `curl http://BN-IP:5052/eth/v1/node/syncing` to check if you can reach your BN from your Charon machine.  
 3. Optimize the latency between the beacon node and charon--ideally they should be on the same LAN or same data center. Any latency here will just add to the time your cluster's need to reach consensus.  
 
 ## Configuration
