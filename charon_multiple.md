@@ -123,7 +123,7 @@ If Charon fails to connect to the beacon node, double check everything has been 
 
 ## Tips and Tricks  
 ### Pluggin more Charon to one CDVN with EC/BN  
-If you already have a CDVN with EC/BN (Nethermind/Lighthouse) running, and want to spin up more CDVNs on the same machine. You can use docker network to achieve it. Follow the previous steps in this guide to put additional CDVN in their own folder, and configure them with extra external docker network settings: please look at [this guide](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md) here for more detail steps. If you have EC/BN running in your Charon1 (in `charon1_default` docker network), for Charon2,3... you will need to add these lines in the docker compose override file. 
+If you already have a CDVN with EC/BN (Nethermind/Lighthouse) running, and want to spin up more CDVNs on the same machine. You can use docker network to achieve it. Follow the previous steps in this guide to put additional CDVN in their own folder, and configure them with extra external docker network settings: please look at [this guide](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md) here for more detail steps. If you have EC/BN running in your Charon1 (for example, in `charon1_default` docker network), for Charon2,3... you will need to add these lines in the docker compose override file. 
 1. Disable EC/BN in the additional Charon nodes.  
 2. Modify charon section in docker-compose.override.yml file  
 ```
@@ -139,7 +139,7 @@ The section in the override file should now look like this:
 Add the follow lines to the bottom of the file:  
 ```
 networks:
-  eth-docker_default:
+  charon1_default:
     name: charon1_default
     external: true
 ```
