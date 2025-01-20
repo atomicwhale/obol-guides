@@ -71,7 +71,7 @@ services:
       #- 5054:5054 # Metrics
 ```
 Use `Ctrl+O` and `Ctrl+X` to save and exit if you using `nano`.
-4. (Optional) Disable mev-boost  
+4. Disable mev-boost  
 *Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
 You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
 The section should now look like this:  
@@ -84,7 +84,6 @@ The section should now look like this:
       #- 18550:18550 # Metrics
 ```
 ### 3. Configure Charon to use additional docker network
-(This following step use ETH-docker `eth-docker_default` as example, please adjust if you are running Rocketpool Smartnode or other packages)  
 1. Modify `charon` section in `docker-compose.override.yml` file  
 ```
 nano docker-compose.override.yml
@@ -98,6 +97,7 @@ The section in the override file should now look like this:
 ```
 
 2. Add the follow lines to the bottom of the file:
+(This following step use ETH-docker `eth-docker_default` as example, please adjust if you are running Rocketpool Smartnode or other packages)  
 ```
 networks:
   eth-docker_default:
