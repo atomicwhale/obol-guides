@@ -142,4 +142,6 @@ You can use tools such as [yougetsignal](https://www.yougetsignal.com/tools/open
 -----------
 **Some other guides here to help with setting up CDVN**  
 https://github.com/atomicwhale/obol-guides/blob/main/README.md
-
+  
+##   
+*If you run into issue or have any suggestion feel free to open a PR or contact me (atomicwhale|at0micwhale) on Obol discord.*
