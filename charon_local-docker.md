@@ -96,7 +96,7 @@ The section in the override file should now look like this:
       - eth-docker_default
 ```
 
-2. Add the follow lines to the bottom of the file:
+2. Add the follow lines to the bottom of the file:  
 (This following step use ETH-docker `eth-docker_default` as example, please adjust if you are running Rocketpool Smartnode or other packages)  
 ```
 networks:
