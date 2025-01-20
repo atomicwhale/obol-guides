@@ -33,5 +33,6 @@ This guide covers running Charon with remote EC/BN. For people who already have 
 Other guides  
  4. [Running Multiple Charon instances on one machine](https://github.com/atomicwhale/obol-guides/blob/main/charon_multiple.md)  
   This guide covers steps to run multiple Charon instaces on one machine.  
-
-* If you run into issue or have any suggestion feel free to open a PR or contact me (atomicwhale|at0micwhale) on Obol discord.
+  
+##   
+*If you run into issue or have any suggestion feel free to open a PR or contact me (atomicwhale|at0micwhale) on Obol discord.*
