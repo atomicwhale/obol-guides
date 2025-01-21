@@ -122,7 +122,7 @@ The logs will look like this if it fail to connect to the BN:
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on discord and ask for help.  
 
 ## Tips and Tricks  
-### Pluggin more Charon to one CDVN with EC/BN  
+### Using one CDVN to manage EC/BN  
 (Official support for this is coming soon too, stay tune.)  
 If you running a few CDVNs on the same machine and want one of them to manage the EC/BN. You can use docker network to achieve it. Follow the previous steps in this guide to put additional CDVN in their own folder.   
 1. Disable EC/BN in the additional Charon nodes.
