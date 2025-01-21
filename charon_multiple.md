@@ -124,9 +124,23 @@ If Charon fails to connect to the beacon node, double check everything has been 
 ## Tips and Tricks  
 ### Pluggin more Charon to one CDVN with EC/BN  
 (Official support for this is coming soon too, stay tune.)  
-If you already have a CDVN with EC/BN (Nethermind/Lighthouse) running, and want to spin up more CDVNs on the same machine. You can use docker network to achieve it. Follow the previous steps in this guide to put additional CDVN in their own folder
-1. Disable EC/BN in the additional Charon nodes.  
-2. Point additional Charon nodes to the BN running in Charon1, edit the `.env` file:  
+If you running a few CDVNs on the same machine and want one of them to manage the EC/BN. You can use docker network to achieve it. Follow the previous steps in this guide to put additional CDVN in their own folder.   
+1. Disable EC/BN in the additional Charon nodes.
+2. Add extra docker network, see [this guide](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md) for more detail steps.
+Note down the network name which your EC/BN run in (e.g. `charon-distributed-validator-node-1_dvnode`) and put it in `docker-compose.override.yml` in every additional CDVN.
+```
+  charon:
+    networks:
+      - charon-distributed-validator-node-1_dvnode
+```
+At the end of the file:  
+```
+networks:
+  charon-distributed-validator-node-1_dvnode:
+    name: charon-distributed-validator-node-1_dvnode
+    external: true
+```
+4. Point additional Charon nodes to the BN running in Charon1, edit the `.env` file:  
 ```
 CHARON_BEACON_NODE_ENDPOINTS=http://lighthouse:5052
 ```
