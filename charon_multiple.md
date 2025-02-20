@@ -112,13 +112,13 @@ Check the logs of different Charon containers by using:
 You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.  
 - If Charon connects to the BN sucessfully, you should not see any error.  
 The logs will look like this if it can connect to the BN:  
-![Alt text](screenshots/charon-connection-success.png?raw=true)
+![Alt text](static/img/charon-connection-success.png?raw=true)
   
 - If Charon cannot connect to the beacon node, you will see an error:  
 >ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}
 
 The logs will look like this if it fail to connect to the BN:  
-![Alt text](screenshots/charon-connection-fail.png?raw=true)
+![Alt text](static/img/charon-connection-fail.png?raw=true)
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on discord and ask for help.  
 
 ## Tips and Tricks  

@@ -29,7 +29,7 @@ For example, the BN will need the following flags
 --rpc-host=0.0.0.0
 ```
 For EthPillar, it can be done by going to `Consensus Client` - `8 Expose consensus client RPC Port`  
-![Alt text](screenshots/ethpillar.png?raw=true)
+![Alt text](static/img/ethpillar.png?raw=true)
   
 2. Make sure this port is protected behind a firewall, because you don't want random people on the internet to connect to it. Please refer to other firewall guides for this.  
 
@@ -157,13 +157,13 @@ docker logs charon-distributed-validator-node-charon-1 --tail 50 -f
 You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.  
 - If Charon connects to the BN sucessfully, you should not see any error.  
 The logs will look like this if it can connect to the BN:  
-![Alt text](screenshots/charon-connection-success.png?raw=true)
+![Alt text](static/img/charon-connection-success.png?raw=true)
   
 - If Charon cannot connect to the beacon node, you will see an error:  
 >ERRO cmd        Fatal error: new eth2 http client: fetch fork schedule: beacon api fork_schedule: client is not active {"label": "fork_schedule"}
 
 The logs will look like this if it fail to connect to the BN:  
-![Alt text](screenshots/charon-connection-fail.png?raw=true)
+![Alt text](static/img/charon-connection-fail.png?raw=true)
 If Charon fails to connect to the beacon node, double check everything has been configure corect it, or hop on the discord and ask for help.  
 
 ## Tips and Tricks
