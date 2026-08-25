@@ -1,16 +1,16 @@
-## Add CDVN's Prometheus to the monitoring docker network
-
-## Add a new datasource
+## 1. Add a new datasource
+Add the CDVN's Prometheus container to the monitoring docker network (if CDVN and monitoring stack are on the same machine)  
+If the monitoring stack is on a nexternal machine, then think about port mapping (firewall it) or a tunnel (e.g. traefik)
 - Add a new Prometheus datasource  
 ![Alt text](static/img/datasource1.png?raw=true)
 ![Alt text](static/img/datasource2.png?raw=true)
 - Note down the UID of the datasource  
 - Use `http://<container name>:9090` in the URL  
-- ![Alt text](static/img/datasource3.png?raw=true)
+![Alt text](static/img/datasource3.png?raw=true)
 - Click "Save & test" button at the bottom  
 
-## Updating the Dashboard
-### Method 1
+## 2. Updating the Dashboard
+### 2.1 Method 1 (work best with a single datasource)
 - Downlaod and update the dashboard JSON file:
 Find sections like this:
 ```
@@ -22,13 +22,13 @@ Find sections like this:
 - Replace the "uid" value with the UID you noted down for the Prometheus datasource  
 - Reimport the dashboard  
 
-### Method 2
+### 2.2 Method 2 (enable switching between multiple datasources)
 - Add a new Variable for datasource  
-- ![Alt text](static/img/datasource4.png?raw=true)
-- ![Alt text](static/img/datasource6.png?raw=true)
-- ![Alt text](static/img/datasource5.png?raw=true)
+![Alt text](static/img/datasource4.png?raw=true)
+![Alt text](static/img/datasource6.png?raw=true)
+![Alt text](static/img/datasource5.png?raw=true)
 Now you can either:  
-- Edit each panel and update the datasource  
+- Edit each panel one by one and update the datasource  
 ![Alt text](static/img/datasource7.png?raw=true)
 ![Alt text](static/img/datasource8.png?raw=true)
 - Or Export the dashboard, edit all the relevant sections at once to look like this:  
