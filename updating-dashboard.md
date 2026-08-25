@@ -1,4 +1,4 @@
-(This is a draft guide only. It is missing many details, souse it at your own risk)
+(This is a draft guide only. It is missing many details, use it at your own risk)
 
 ## 1. Add a new datasource
 Add the CDVN's Prometheus container to the monitoring docker network (if CDVN and monitoring stack are on the same machine)  
