@@ -1,12 +1,12 @@
 # Running Charon with Existing Execution/Consensus Clients
 
 Charon is a middleware built by Obol to enable any existing Ethereum validator clients to operate together as part of a distributed validator.  
-Users are highly recommended to go through [Obol's official documetation](https://docs.obol.org/run-a-dv/start/quickstart_overview) first to have a basic understanding of how a Charon DVT cluster works.
+Users are highly recommended to go through [Obol's official documetation](https://docs.obol.org/run-a-dv/start/quickstart_overview) first to have a basic understanding of how a Charon DVT cluster works.  
 
 ## Overview
 These guides are created for people who want to run Charon with their existing execution/consensus clients.  
 Obol provides an official docker-based package called [Charon Distributed Validator Node (CDVN)](https://github.com/ObolNetwork/charon-distributed-validator-node). These guides assume you will be running this package **using docker**.  
-The basic principles are the same across all these guides. These guides aims to cover tips and tricks that are included in the standard setup described in the official documents.
+The basic principles are the same across all these guides. These guides aims to cover tips and tricks that are included in the standard setup described in the official documents.  
 (These guides may miss some specific details, take the idea and adapt to your setup)  
 (Charon, the CDVN stack and their configuration can change over time, this guide may not be up to date all the time)  
 
