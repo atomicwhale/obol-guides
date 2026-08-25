@@ -6,8 +6,8 @@ If the monitoring stack is on a nexternal machine, then think about port mapping
 - Add a new Prometheus datasource  
 ![Alt text](static/img/datasource1.png?raw=true)
 ![Alt text](static/img/datasource2.png?raw=true)
-- Note down the UID of the datasource  
-- Use `http://<container name>:9090` in the URL  
+- Note down the UID of the datasource (from the browser URL section)  
+- Use `http://<container name>:9090` in the server URL  
 ![Alt text](static/img/datasource3.png?raw=true)
 - Click "Save & test" button at the bottom  
 
