@@ -13,8 +13,8 @@ If the monitoring stack is on a nexternal machine, then think about port mapping
 
 ## 2. Updating the Dashboard
 ### 2.1 Method 1 (work best with a single datasource)
-- Download and update the dashboard JSON file (charon_overview_dashboard.json):  [Link](https://github.com/ObolNetwork/charon-distributed-validator-node/tree/main/grafana/dashboards)
-Find sections like this:
+- Download and update the dashboard JSON file (charon_overview_dashboard.json): [Link](https://github.com/ObolNetwork/charon-distributed-validator-node/tree/main/grafana/dashboards)  
+- Find sections like this:
 ```
 "datasource": {
   "type": "prometheus",
@@ -22,7 +22,7 @@ Find sections like this:
 }
 ```
 - Replace the "uid" value with the UID you noted down for the Prometheus datasource  
-- Reimport the dashboard  
+- (Re-)import the dashboard to Grafana  
 
 ### 2.2 Method 2 (enable switching between multiple datasources)
 - Add a new Variable for datasource  
