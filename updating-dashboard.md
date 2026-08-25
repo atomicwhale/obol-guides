@@ -13,7 +13,7 @@ If the monitoring stack is on a nexternal machine, then think about port mapping
 
 ## 2. Updating the Dashboard
 ### 2.1 Method 1 (work best with a single datasource)
-- Downlaod and update the dashboard JSON file:
+- Download and update the dashboard JSON file (charon_overview_dashboard.json):  [Link](https://github.com/ObolNetwork/charon-distributed-validator-node/tree/main/grafana/dashboards)
 Find sections like this:
 ```
 "datasource": {
