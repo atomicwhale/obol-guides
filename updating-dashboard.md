@@ -2,7 +2,7 @@
 
 ## Add a new datasource
 - Add a new Prometheus datasource  
-![Alt text](static/img/datasource1.png?raw=true | width=100)
+![Alt text](static/img/datasource1.png?raw=true)
 ![Alt text](static/img/datasource2.png?raw=true)
 - Note down the UID of the datasource  
 - Use `http://<container name>:9090` in the URL  
