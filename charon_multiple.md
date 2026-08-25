@@ -5,7 +5,7 @@ TLDR: Docker compose makes this setup very easy. Clone the Charon Distributed Va
 ### 0. Important notes
 
 This guide is based on this assumptions:  
-**You are runing the BN/EC separately to Charon.** This is highly recommended because it makes managing each Charon node much easier, and you don't need to bring the BN/EC down when making changes to the ocnfiguration.  
+**You are runing the BN/EC separately to Charon.** This is highly recommended because it makes managing each Charon node much easier, and you don't need to bring the BN/EC down when making changes to the configuration.  
 **If you arae running one CDVN with the EC/BN clients and wants to spin up more CDVN instance on the same machine. Please read the short section "Pluggin more Charon to one CDVN with EC/BN" at the end of the guide.  
   
 1. [Disclaimer] This setup is for testing, or if you are running multiple nodes for different clusters. Please do not run more than one Charon nodes from the same cluster on a single machine as it creats a single point of failure. Please run each node on a separated machine in a production environment.  
@@ -18,21 +18,21 @@ This guide is based on this assumptions:
 1. Specify a directory when first cloning the repo, for example `charon-distributed-validator-node-1`:  
 ```
 # Clone the repo
-git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git charon-distributed-validator-node-1`
+git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git cdvn-1`
 # Change directory
-cd charon-distributed-validator-node-1/
+cd cdvn-1/
 ```
 
-2. If you want to creat another charon node, change the name of the folder to, for example `charon-distributed-validator-node-2`  
+2. If you want to creat another charon node, change the name of the folder to, for example `cdvn-2`  
 notice the folder name is different, it ends with "-2" instead of "-1" in the above axample.  
 
 ```
 # Go back to your home directory
 cd ~
 # Copy the CDVN directory
-cp -r charon-distributed-validator-node-1/ charon-distributed-validator-node-2/`
+cp -r cdvn-1/ cdvn-2/`
 # Go into the directory
-cd charon-distributed-validator-node-2/
+cd cdvn-2/
 ```
 If you are cloning from a current charon directory which already contains an ENR and relervant cluster files, make sure to remove them before you try to start it.
 ```
@@ -43,31 +43,31 @@ rm -r .charon/
 3. Repeat the above step 2 if you want to run more than 2 Charon nodes.  
 The folder and file structure will look like this:  
 ```
-\charon-distributed-validator-node-1
+\cdvn-1
 |-.env
 |-.charon
 |-docker-compose.yml
 |...
-\charon-distributed-validator-node-2
+\cdvn-2
 |-.env
 |-.charon
 |-docker-compose.yml
 |...
-\charon-distributed-validator-node-3
+\cdvn-3
 ...
 ```
 
-### 2. Adjust CDVN configuration  
+### 2. Adjust ports used by additional CDVN  
 
-The configuration of each CDVN needs to be done separatly under each folder. Most of the settings can be done in `.env` and `docker-compose.override.yml` files.  
+The configuration of each CDVN stacks sit separatly under each folder. Most of the settings can be done in `.env` and `custom.yml` files.  
 Look at the official guide for other steps requires for setting up a Charon node: [official guide] (https://docs.obol.org/run/start/quickstart_group) or other [guide here](https://github.com/atomicwhale/obol-guides)  
 
-Ports that are mapped to the host machine also needs to be adjusted to avoid conflicts.
+Ports that are mapped to the host machine needs to be adjusted to avoid conflicts.
 
 1. Each additional Charon needs a different P2P ports (3610 by default)
 (If you are configuring Charon for the first time, start with the template by running `cp .env.sample.mainnet .env`(mainnet) or `cp .env.sample.holesky .env` (holesky))  
 `nano .env`
-Uncomment the P2P port line and add your port here (3611 for example), it shoud look like this after:  
+Uncomment the P2P port line and change the port here (3611 for example), it shoud look like this after:  
 ```
 # Charon host exposed ports
 CHARON_PORT_P2P_TCP=3611
@@ -83,31 +83,42 @@ Uncomment the Grafana port line and change the port number (e.g. 3001)
 It should now looks like this:  
 ```
 # Grafana host exposed ip and port.
-#MONITORING_IP_GRAFANA=
+...
 MONITORING_PORT_GRAFANA=3001
 ```
 
 ### 3. Start Charon  
-
-Go in the directory of the CDVN which you want to start by:  
+1. Go in the directory of the CDVN which you want to start by:  
 ```
 # Go back to your home directory
 cd ~
 # Go in the the CDVN directory to start
-cd charon-distributed-validator-node-1/
+cd cdvn-1/
 ```
-
 Start Charon by running  
 ```
 docker compose up -d
 ```  
 (Make sure you are running this command under the correct charon folder. You will need to run this again for each charon node under their correspding directories)  
 
-### 4. Check if Charon is running successfuly
+2. Start additional CDVN stacks using the same method
+Go in the directory of the CDVN which you want to start by:  
+```
+# Go back to your home directory
+cd ~
+# Go in the the CDVN directory to start
+cd cdvn-2/
+```
+Start Charon by running  
+```
+docker compose up -d
+```
+  
+### 4. Check if Charon is running successfuly  
 
 Check the logs of different Charon containers by using:
-`docker logs charon-distributed-validator-node-charon-1 --tail 50 -f`
-`docker logs charon-distributed-validator-node-charon-2 --tail 50 -f`
+`docker logs cdvn-1-charon-1 --tail 50 -f`
+`docker logs cdvn-2-charon-2 --tail 50 -f`
 (Tips: Using auto complete - You can try pressing `Tab` after typeing the first few letters of the container name)  
 You can monitor the logs here if needed, and use `Ctrl+C` to breakout from the logs.  
 - If Charon connects to the BN sucessfully, you should not see any error.  
@@ -123,21 +134,21 @@ If Charon fails to connect to the beacon node, double check everything has been 
 
 ## Tips and Tricks  
 ### Using one CDVN to manage EC/BN  
-(Official support for this is coming soon too, stay tune.)  
-If you running a few CDVNs on the same machine and want one of them to manage the EC/BN. You can use docker network to achieve it. Follow the previous steps in this guide to put additional CDVN in their own folder.   
+(Official support has a section for this under existing BN: [Link](https://docs.obol.org/run-a-dv/start/create-a-dv-with-a-group))  
+If you running a few CDVNs on the same machine and want one of them to manage the EC/BN. You can also use docker network to achieve it. Follow the previous steps in this guide to put additional CDVN in their own folder.   
 1. Disable EC/BN in the additional Charon nodes.
 2. Add extra docker network, see [this guide](https://github.com/atomicwhale/obol-guides/blob/main/charon_local-docker.md) for more detail steps.
-Note down the network name which your EC/BN run in (e.g. `charon-distributed-validator-node-1_dvnode`) and put it in `docker-compose.override.yml` in every additional CDVN.
+Note down the network name which your EC/BN run in (e.g. `cdvn-1-node-1_dvnode`) and put it in `custom.yml` in every additional CDVN.
 ```
   charon:
     networks:
-      - charon-distributed-validator-node-1_dvnode
+      - cdvn-1-node-1_dvnode
 ```
 At the end of the file:  
 ```
 networks:
-  charon-distributed-validator-node-1_dvnode:
-    name: charon-distributed-validator-node-1_dvnode
+  cdvn-1_dvnode:
+    name: cdvn-1_dvnode
     external: true
 ```
 4. Point additional Charon nodes to the BN running in Charon1, edit the `.env` file:  

@@ -4,7 +4,7 @@
 
 This guide is for people who want to run Charon on an existing machine with local execution/consensus clients (EC/CC) running as system service (systemd). e.g. You have followed one of these guides (Somer Esat Guides / CoinCashew Guides / EthPilar) when setting up your node.
 
-*This guide has been tested on Debian 12 and should work on all Debian-basd (Debian/Ubuntu etc.) system.*  
+*This guide has been tested on CDVN v1.10.3 and Debian 12 and should work on all Debian-basd (Debian/Ubuntu etc.) system.*  
 *The term Beacon node (BN) and Consensus client (CC) are used interchangably in this guide.*
 
   
@@ -14,78 +14,37 @@ We will setup Charon in docker using the Obol official docker package and point 
 
 ## Configuration
 ### 0. Initial setup  
-1. First, your BN has to be configured to expose the validator REST port (e.g. 5052) at `0.0.0.0`. Refer to the client' guide for this.  
-For example, the BN will need the following flags
+1. Please follow the [official guide](https://docs.obol.org/run-a-dv/start/create-a-dv-with-a-group) **Step 1-3** to download Charon, set up the ENR, join a cluster, and run a DKG.  
+Stop **AFTER** you created the `.env` file in Step 4, modify you configurations following the guide below.  
+
+*Make sure you are under the charon folder, it should be `charon-distributed-validator-node` by default)*  
+```
+cd ~/charon-distributed-validator-node
+```
+
+### 1. Check the local Beacon node is reachable  
+1. First, your BN need to be configured to expose the validator REST port (e.g. 5052) to localhost at `0.0.0.0`. Refer to the client' guide for this. (Binding the BN to localhost or `127.0.0.1` does not always work on some system and docker compose, you can bind it to `0.0.0.0` as a workaround. Beware of the risks, and firewall this port!)    
+For example, the BN may need the following flags  
 ```
 # Nimbus
---rest-address=0.0.0.0
+--rest-address=127.0.0.1
 # Lighthouse
---http-address=0.0.0.0
+--http-address=127.0.0.1
 # Teku
---validator-api-interface=0.0.0.0
+--validator-api-interface=127.0.0.1
 # Lodestar
---rest.address=0.0.0.0
+--rest.address=127.0.0.1
 # Prysm
---rpc-host=0.0.0.0
+--rpc-host=127.0.0.1
 ```
 For EthPillar, it can be done by going to `Consensus Client` - `8 Expose consensus client RPC Port`  
 ![Alt text](static/img/ethpillar.png?raw=true)
-  
-2. Make sure this port is protected behind a firewall, because you don't want random people on the internet to connect to it. Please refer to other firewall guides for this.  
 
-3. Please follow the [official guide](https://docs.obol.org/run/start/quickstart_group) **Step 1-3** to download Charon, set up the ENR, join a cluster, and run a DKG.  
-Stop **BEFORE** you do Step 4 and modify you configurations following the guide below.  
+Binding the BN to `0.0.0.0` is a workaround, beware of the risk associated with it: [Read more](https://dev.to/mjnaderi/accessing-host-services-from-docker-containers-1a97)  
+Make sure this port is protected behind a firewall, because you don't want random people on the internet to connect to it. Please refer to other firewall guides for this.  
 
-### 1. Disable EC/CC included in the Charon docker package
-(This step is taken from the official guide, you can find it in the official guide [Step 4: Existing Beacon Node](https://docs.obol.org/run/start/quickstart_group#step-4-start-your-distributed-validator-node)  
-1. Create the `docker-compose.override.yml` file from the example  
-```
-cp -n docker-compose.override.yml.sample docker-compose.override.yml
-```
-
-3. Modify `docker-compose.override.yml` file using an editor (`nano` for example)  
-```
-nano docker-compose.override.yml
-```
-   * Uncomment `service`, and both `nethermind` and `lighthouse` under `services`.  
-   * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
-The override file should now look like this:  
-```
-services:
-  nethermind:
-    # Disable nethermind
-    profiles: [disable]
-    # Bind nethermind internal ports to host ports
-    #ports:
-      #- 8545:8545 # JSON-RPC
-      #- 8551:8551 # AUTH-RPC
-      #- 6060:6060 # Metrics
-
-  lighthouse:
-    # Disable lighthouse
-    profiles: [disable]
-    # Bind lighthouse internal ports to host ports
-    #ports:
-      #- 5052:5052 # HTTP
-      #- 5054:5054 # Metrics
-```
-Use `Ctrl+O` and `Ctrl+X` to save and exit if you using `nano`.
-4. (Optional) Disable mev-boost  
-*Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
-You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
-The section should now look like this:  
-```
-  mev-boost:
-    # Disable mev-boost
-    profiles: [disable]
-    # Bind mev-boost internal ports to host ports
-    #ports:
-      #- 18550:18550 # Metrics
-```
-
-### 2. Configure Charon to use local Beacon node (Consensus client)  
-1. Check the local Beacon node is reachable at `localhost:<port-number>`
-2. For example
+2. Check the local Beacon node is reachable at `localhost:<port-number>`
+For example
 ```
 curl http://localhost:5052/eth/v1/node/syncing
 ```
@@ -94,62 +53,82 @@ You should see something like this:
 
 which indicates that the beaconnode is reachable at localhost, and `sync_distance` at (0 or 1) and `is_syncing` is (false) which suggest the consensus client is fully synced.  
 
-2. Modify `docker-compose.override.yml` so Charon can connect to host network  
-(Docker compose creates a [new docker network by default](https://docs.docker.com/compose/how-tos/networking/), containers within the network cannot reach service running on host without further configuration)  
-Modify the `docker-compose.override.yml` file using an editor  
-```
-nano docker-compose.override.yml
-```
-Uncomment the `charon` line, and add two lines for `extra_host`.  
-It should now look like this:  
-```
-  charon:
-    # Configure any additional env var flags in .env.charon.more
-    #env_file: [.env.charon.more]
-    # Uncomment the extra_hosts section if you are trying to communicate with a CL running in a different docker network on the same machine 
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-```
-Save and exit.  
+3. **Again** Make sure this port is protected behind a firewall (if binding BN to `0.0.0.0`), because you don't want random people on the internet to connect to it. Please refer to other firewall guides for this.  
 
-3. Configure CDVN in the `.env` file
-First create the `.env` file using the template provided:  
-For Holesky testnet  
-```
-cp .env.sample.holesky .env
-```
-For Ethereum mainnet  
-```
-cp .env.sample.mainnet .env
-```
-Modify the BN endpoint in the `.env` file  
+### 2. Disable EC/CC and mev-boost included in the Charon docker package, and configure Charon to use local Beacon node
+(This step is taken from the official guide, you can find it in the official guide [Step 4: Existing BN](https://docs.obol.org/run-a-dv/start/create-a-dv-with-a-group#step-4-start-your-distributed-validator-node)  
+1. (Go into the CDVN folder) Modify `.env` file using an editor (`nano` for example)  
 ```
 nano .env
 ```
-Uncomment and set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file to localhost.  
-Point the endpoint to docker host network  
+
+2. Uncomment EL=el-none, CL=cl-none and MEV=mev-none variables in the .env file and comment out EL=el-nethermind,  CL=cl-lighthouse and MEV=mev-mevboost variables, so it looks like this:  
 ```
-http://host.docker.internal:5052
+#EL=el-nethermind
+...
+EL=el-none
+...
+#CL=cl-lighthouse
+...
+CL=cl-none
+...
+#MEV=mev-mevboost
+...
+MEV=mev-none
 ```
+
+3. Configure Charon to use local Beacon node (Consensus client)  
+Uncomment and set the `CHARON_BEACON_NODE_ENDPOINTS` variable in the `.env` file  
 The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
 CHARON_BEACON_NODE_ENDPOINTS=http://host.docker.internal:5052
 ```
-Save and exit.  
+Use `Ctrl+O` and `Ctrl+X` to save and exit if using `nano`.  
 
-### 3. Start Charon  
-*Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)*  
+### 3. Enable Charon to connect to host network
+1. Create a docker compose override file, for example `custom.yml`  
 ```
-cd ~/charon-distributed-validator-node
+cp docker-compose.override.yml.sample custom.yml
 ```
-Start Charon by running  
+
+2. Modify `charon` section in `custom.yml` file  
+```
+nano custom.yml
+```
+Uncomment line `services`  
+Uncomment line `charon` under the service section, and uncomment additional network configureation here.  
+The section in the override file should now look like this:  
+```
+  charon:
+  ...
+    # Uncomment the extra_hosts section if you are trying to communicate with a CL running in a different docker network on the same machine 
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+```
+Use `Ctrl+O` and `Ctrl+X` to save and exit if using `nano`.  
+
+3. Configure the override file in the `.env` file
+We are back at editing the `.env` file again
+```
+nano .env
+```
+Find the line whcih starts with COMPOSE_FILE and add `:custom.yml` to the end.  
+It shoud now look like this:  
+```
+# The actual adjustable values are specified above
+...
+COMPOSE_FILE=compose-el.yml:compose-cl.yml:compose-vc.yml:compose-mev.yml:docker-compose.yml:custom.yml
+```
+Use `Ctrl+O` and `Ctrl+X` to save and exit if using `nano`.  
+
+### 4. Start Charon  
+1. Start Charon by running  
 ```
 docker compose up -d
 ```
 
-### 4. Check if Charon is running successfuly  
-Check the logs of the Charon container by using `docker logs <charon-container-name> -f`, for example:  
+2. Check the logs of the Charon container by using `docker logs <charon-container-name> -f`, for example:  
 ```
 docker logs charon-distributed-validator-node-charon-1 --tail 50 -f
 ```

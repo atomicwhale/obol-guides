@@ -4,7 +4,7 @@
 
 This guide is for people who want to run Charon connecting to execution/consensus clients (EC/CC) running on a external/remote machine. e.g. You running Charon on a small VPS and want to plug it into a current EC/CC pair.)  
 
-*This guide has been tested on Debian 12 and should work on all Debian-basd (Debian/Ubuntu etc.) system.*  
+*This guide has been tested on CDVN v1.10.3 and Debian 12 and should work on all Debian-basd (Debian/Ubuntu etc.) system.*  
 *The term Beacon node (BN) and Consensus client (CC) are used interchangably in this guide.*
   
 **Connecting to existing EC/BN is already covered in the Obol official guide: [Step 4: Existing Beacon Node](https://docs.obol.org/start/quickstart_group#step-4-start-your-distributed-validator-node).  
@@ -25,59 +25,34 @@ A few things to consider when you are using a remote BN.
 ## Configuration
 ### 0. Initial setup  
 Please follow the [official guide](https://docs.obol.org/start/quickstart_group) **Step 1-3** to download Charon, set up the ENR, join a cluster, and run a DKG.  
-Stop **BEFORE** you do Step 4 and modify you configurations following the guide below.  
+Stop **AFTER** you created the `.env` file in Step 4,  modify you configurations following the guide below.  
 
-### 1. Disable EC/CC included in the Charon docker package
-(This step is taken from the official guide, you can find it in the official guide [Step 4: Existing Beacon Node](https://docs.obol.org/run/start/quickstart_group#step-4-start-your-distributed-validator-node)  
-1. Create the `docker-compose.override.yml` file from the example  
+### 1. Disable EC/CC and mev-boost included in the Charon docker package
+(This step is taken from the official guide, you can find it in the official guide [Step 4: Existing BN](https://docs.obol.org/run-a-dv/start/create-a-dv-with-a-group#step-4-start-your-distributed-validator-node)  
+1. (Go into the CDVN folder) Modify `.env` file using an editor (`nano` for example)  
 ```
-cp -n docker-compose.override.yml.sample docker-compose.override.yml
+nano .env
 ```
 
-3. Modify `docker-compose.override.yml` file using an editor (`nano` for example)  
+2. Uncomment EL=el-none, CL=cl-none and MEV=mev-none variables in the .env file and comment out EL=el-nethermind,  CL=cl-lighthouse and MEV=mev-mevboost variables, so it looks liek this:  
 ```
-nano docker-compose.override.yml
-```
-   * Uncomment `service`, and both `nethermind` and `lighthouse` under `services`.  
-   * Uncomment the `profiles: [disable]` line for both `nethermind` and `lighthouse`.  
-The override file should now look like this:  
-```
-services:
-  nethermind:
-    # Disable nethermind
-    profiles: [disable]
-    # Bind nethermind internal ports to host ports
-    #ports:
-      #- 8545:8545 # JSON-RPC
-      #- 8551:8551 # AUTH-RPC
-      #- 6060:6060 # Metrics
-
-  lighthouse:
-    # Disable lighthouse
-    profiles: [disable]
-    # Bind lighthouse internal ports to host ports
-    #ports:
-      #- 5052:5052 # HTTP
-      #- 5054:5054 # Metrics
-```
-Use `Ctrl+O` and `Ctrl+X` to save and exit if you using `nano`.
-4. (Optional) Disable mev-boost  
-*Charon does not talk to mev-boost, only CC needs to talk to it when proposaing blocks. You should configure your mev-boost when you set up your CC, check relevant guides you followed when you setting up your EC and CC.*  
-You can use the same method to disable mev-boost container (by uncommenting the relevant lines in the `mev-boost` section).  
-The section should now look like this:  
-```
-  mev-boost:
-    # Disable mev-boost
-    profiles: [disable]
-    # Bind mev-boost internal ports to host ports
-    #ports:
-      #- 18550:18550 # Metrics
+#EL=el-nethermind
+...
+EL=el-none
+...
+#CL=cl-lighthouse
+...
+CL=cl-none
+...
+#MEV=mev-mevboost
+...
+MEV=mev-none
 ```
 
 ### 2. Configure Charon to use remote Beacon node (Consensus client)  
 1. Check the remote Beacon node is reachable  
 ```
-curl http://REMOTE_IP:5052/eth/v1/node/syncing
+curl http://<REMOTE_IP>:5052/eth/v1/node/syncing
 ```  
 You should see something like this:  
 > {"data":{"head_slot":"XXXXXXXX","sync_distance":"0","is_syncing":false,"is_optimistic":false,"el_offline":false}}
@@ -88,20 +63,24 @@ which indicates that the beaconnode is reachable, and `sync_distance` at (0 or 1
 The section should now look like this:  
 ```
 # Connect to one or more external beacon nodes. Use a comma separated list excluding spaces.
-CHARON_BEACON_NODE_ENDPOINTS=http://REMOTE_IP:5052
+CHARON_BEACON_NODE_ENDPOINTS=http://<REMOTE_IP>:5052
 ```
-Charon supports connecting to multiple BNs, if you have other BN available you can also add them here.
-`CHARON_BEACON_NODE_ENDPOINTS=http://REMOTE_IP1:5052,,http://REMOTE_IP2:5052`
+Charon supports connecting to multiple BNs, if you have other BN available you can also edit them here.
+```
+CHARON_BEACON_NODE_ENDPOINTS=http://<REMOTE_IP1>:5052
+...
+CHARON_FALLBACK_BEACON_NODE_ENDPOINTS=http://<REMOTE_IP2>:5052
+```
 Save and exit.  
 
 ### 3. Start Charon  
-Start Charon by running  
+1. Start Charon by running  
 (Make sure you are running this command under the charon folder, it should be `charon-distributed-validator-node` by default)
 ```
 docker compose up -d
 ```
 
-### 4. Check if Charon is running successfuly  
+2. Check if Charon is running successfuly  
 Check the logs of the Charon container by using `docker logs <charon-container-name> -f`, for example:  
 ```
 docker logs charon-distributed-validator-node-charon-1 --tail 50 -f
